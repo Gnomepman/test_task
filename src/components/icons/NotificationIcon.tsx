@@ -11,7 +11,7 @@ export default function NotificationIcon(props: CustomSvgIconProps) {
         height: `${size}px`,
         width: `${size}px`,
       }}
-      viewBox="0 0 24 24"
+      viewBox="0 0 20 23"
     >
       <path
         d="M7.00024 21C8.50024 22.3333 11.5002 22.3333 13.0002 21"

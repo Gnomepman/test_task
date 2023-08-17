@@ -1,5 +1,6 @@
 import { Box } from '@mui/material';
-import Appbar from '../components/Tabbar';
+import Tabbar from '../components/Tabbar';
+import Appbar from '../components/Appbar';
 import { makeStyles } from 'tss-react/mui';
 
 const useStyles = makeStyles()(() => {
@@ -7,6 +8,11 @@ const useStyles = makeStyles()(() => {
     dashboardContainer: {
       display: 'grid',
       gridTemplateColumns: 'auto 1fr',
+      height: '100%',
+    },
+    dashBoardWrapper: {
+      display: 'flex',
+      flexDirection: 'column',
       height: '100%',
     },
   };
@@ -17,8 +23,10 @@ export default function Dashboard() {
 
   return (
     <Box className={classes.dashboardContainer}>
-      <Appbar />
-      <Box>I am content</Box>
+      <Tabbar />
+      <Box className={classes.dashBoardWrapper}>
+        <Appbar />
+      </Box>
     </Box>
   );
 }
