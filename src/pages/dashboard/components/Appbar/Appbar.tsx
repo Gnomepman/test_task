@@ -10,7 +10,7 @@ import {
   useTheme,
 } from '@mui/material';
 import { makeStyles } from 'tss-react/mui';
-import AvatarSrc from '../../../../../public/Avatar.png';
+import AvatarSrc from '@/assets/Avatar.png';
 import ArrowDownIcon from '@/components/icons/ArrowDownIcon';
 
 const useStyles = makeStyles()((theme) => {
