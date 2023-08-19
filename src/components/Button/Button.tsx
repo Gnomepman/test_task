@@ -1,4 +1,4 @@
-import { Button } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import { makeStyles } from 'tss-react/mui';
 
 const variants = {
@@ -9,7 +9,7 @@ const variants = {
 };
 
 interface ButtonProps {
-  variant: keyof typeof variants;
+  variant: keyof typeof variants | string;
   children: React.ReactNode;
   onClick?: () => void;
 }
@@ -18,8 +18,9 @@ const useStyles = makeStyles()((theme) => {
   return {
     button: {
       padding: theme.spacing(1, 2),
-      borderRadius: theme.spacing(1),
+      borderRadius: theme.spacing(0.625),
       color: theme.palette.common.white,
+      textTransform: 'none',
     },
     [variants.success]: {
       background: theme.palette.success.main,
@@ -29,6 +30,7 @@ const useStyles = makeStyles()((theme) => {
     },
     [variants.warning]: {
       background: theme.palette.warning.main,
+      color: theme.palette.common.black,
       ':hover': {
         background: theme.palette.warning.light,
       },
@@ -50,7 +52,7 @@ export default function Index(props: ButtonProps) {
   const { variant, children, onClick } = props;
   return (
     <Button onClick={onClick} className={cx(classes.button, classes[variant])}>
-      {children}
+      <Typography variant="h4">{children}</Typography>
     </Button>
   );
 }
