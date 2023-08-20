@@ -1,6 +1,7 @@
 import Divider from '@/components/Divider';
 import TableCell from '@/components/TableCell';
 import TableRow from '@/components/TableRow';
+import ArrowDownIcon from '@/components/icons/ArrowDownIcon';
 import ColleaguesIcon from '@/components/icons/ColleaguesIcon';
 import DocumentIcon from '@/components/icons/DocumentIcon';
 import DotsIcon from '@/components/icons/DotsIcon';
@@ -9,13 +10,16 @@ import { Team } from '@/types';
 import {
   Box,
   CircularProgress,
+  Collapse,
   IconButton,
   Table,
   TableBody,
   TableContainer,
   Typography,
+  useMediaQuery,
   useTheme,
 } from '@mui/material';
+import { useState } from 'react';
 import { makeStyles } from 'tss-react/mui';
 
 interface TeamsProps {
@@ -35,10 +39,20 @@ const useStyles = makeStyles()((theme) => {
       background: theme.palette.primary.light,
       padding: theme.spacing(3, 2),
       gap: theme.spacing(2),
+      [theme.breakpoints.down('md')]: {
+        height: 'auto',
+        padding: theme.spacing(1.5),
+      },
     },
     teamsTitle: {
       display: 'flex',
+      alignItems: 'center',
       justifyContent: 'space-between',
+    },
+    teamsTitleRightBlock: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: theme.spacing(1),
     },
     teamsTableCellName: {
       display: 'flex',
@@ -63,8 +77,10 @@ const useStyles = makeStyles()((theme) => {
 
 export default function Teams(props: TeamsProps) {
   const theme = useTheme();
-  const { teams } = props;
   const { classes } = useStyles();
+  const { teams } = props;
+  const [expanded, setExpanded] = useState(false);
+  const isSmallDevice = useMediaQuery(theme.breakpoints.down('md'));
 
   return (
     <Box className={classes.teamsWrapper}>
@@ -72,70 +88,82 @@ export default function Teams(props: TeamsProps) {
         <Typography variant="h2" color={theme.palette.text.darkPurple}>
           Мої команди
         </Typography>
-        <Typography variant="h2">
-          <strong>{teams.length}</strong>
-        </Typography>
+        <Box className={classes.teamsTitleRightBlock}>
+          <Typography variant="h2">
+            <strong>{teams.length}</strong>
+          </Typography>
+          {isSmallDevice && (
+            <IconButton onClick={() => setExpanded((prev) => !prev)}>
+              <ArrowDownIcon />
+            </IconButton>
+          )}
+        </Box>
       </Box>
-      <Box>
-        {!!teams.length && <Divider />}
-        <TableContainer>
-          <Table>
-            <TableBody>
-              {teams &&
-                teams.map((team) => (
-                  <TableRow key={team.id}>
-                    <TableCell>
-                      <Box className={classes.teamsTableCellName}>
-                        <Typography variant="h3">{team.name}</Typography>
+      <Collapse in={!isSmallDevice || expanded} unmountOnExit>
+        <Box>
+          <Divider />
+          <TableContainer>
+            <Table>
+              <TableBody>
+                {teams &&
+                  teams.map((team) => (
+                    <TableRow key={team.id}>
+                      <TableCell>
+                        <Box className={classes.teamsTableCellName}>
+                          <Typography variant="h3">{team.name}</Typography>
+                          <IconButton>
+                            <InfoIcon />
+                          </IconButton>
+                        </Box>
+                      </TableCell>
+                      <TableCell>
+                        <Box className={classes.teamsTableCellColleages}>
+                          <IconButton>
+                            <ColleaguesIcon />
+                          </IconButton>
+                          <Typography variant="subtitle1">
+                            <strong>{team.nubmerOfMembers}</strong>
+                          </Typography>
+                        </Box>
+                      </TableCell>
+                      <TableCell>
+                        <Box className={classes.teamsTableCellStatus}>
+                          <CircularProgress
+                            variant="determinate"
+                            value={team.status}
+                            color="primary"
+                            size={24}
+                            thickness={5}
+                            sx={{ strokeLinecap: 'round' }}
+                          />
+                          <Typography variant="subtitle1">
+                            <strong>{`${team.status}%`}</strong>
+                          </Typography>
+                        </Box>
+                      </TableCell>
+                      <TableCell>
+                        <Box className={classes.teamsTableCellDocuments}>
+                          <IconButton>
+                            <DocumentIcon />
+                          </IconButton>
+                          <Typography variant="subtitle1">
+                            <strong>{team.numberOfDocuments}</strong>
+                          </Typography>
+                        </Box>
+                      </TableCell>
+                      <TableCell align="right">
                         <IconButton>
-                          <InfoIcon />
+                          <DotsIcon />
                         </IconButton>
-                      </Box>
-                    </TableCell>
-                    <TableCell>
-                      <Box className={classes.teamsTableCellColleages}>
-                        <IconButton>
-                          <ColleaguesIcon />
-                        </IconButton>
-                        <Typography variant="subtitle1">
-                          <strong>{team.nubmerOfMembers}</strong>
-                        </Typography>
-                      </Box>
-                    </TableCell>
-                    <TableCell>
-                      <Box className={classes.teamsTableCellStatus}>
-                        <CircularProgress
-                          variant="determinate"
-                          value={team.status}
-                          color="primary"
-                          size={24}
-                        />
-                        <Typography variant="subtitle1">
-                          <strong>{team.status}%</strong>
-                        </Typography>
-                      </Box>
-                    </TableCell>
-                    <TableCell>
-                      <Box className={classes.teamsTableCellDocuments}>
-                        <IconButton>
-                          <DocumentIcon />
-                        </IconButton>
-                        <Typography variant="subtitle1">
-                          <strong>{team.numberOfDocuments}</strong>
-                        </Typography>
-                      </Box>
-                    </TableCell>
-                    <TableCell align="right">
-                      <IconButton>
-                        <DotsIcon />
-                      </IconButton>
-                    </TableCell>
-                  </TableRow>
-                ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </Box>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <Divider />
+        </Box>
+      </Collapse>
     </Box>
   );
 }
