@@ -2,6 +2,10 @@ import { TextField, useTheme } from '@mui/material';
 import SearchIcon from '../icons/SearchIcon';
 import { makeStyles } from 'tss-react/mui';
 
+interface InputProps {
+  fullWidth?: boolean;
+}
+
 const useStyles = makeStyles()(() => {
   return {
     Input: {
@@ -10,13 +14,15 @@ const useStyles = makeStyles()(() => {
   };
 });
 
-export default function Input() {
+export default function Input(props: InputProps) {
   const theme = useTheme();
+  const { fullWidth } = props;
   const { classes } = useStyles();
 
   return (
     <TextField
       className={classes.Input}
+      fullWidth={fullWidth}
       InputProps={{
         startAdornment: <SearchIcon color={theme.palette.common.gray} />,
         sx: {
