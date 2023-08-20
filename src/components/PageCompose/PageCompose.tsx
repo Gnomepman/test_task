@@ -13,8 +13,9 @@ export default function PageCompose(props: PageComposeProps) {
         position: 'absolute',
         width: '100%',
         maxWidth: '100%',
-        height: '100vh',
-        maxHeight: '100vh',
+        height: '100%',
+        maxHeight: '100%',
+        overflow: 'hidden',
       }}
     >
       {children}

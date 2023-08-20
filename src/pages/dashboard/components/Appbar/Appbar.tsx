@@ -7,6 +7,7 @@ import {
   Box,
   IconButton,
   Typography,
+  useMediaQuery,
   useTheme,
 } from '@mui/material';
 import { makeStyles } from 'tss-react/mui';
@@ -23,9 +24,14 @@ const useStyles = makeStyles()((theme) => {
       borderColor: theme.palette.primary.light,
       gap: theme.spacing(2.5),
       padding: theme.spacing(2, 3),
+      position: 'sticky',
+      top: 0,
+      zIndex: theme.zIndex.appBar,
+      background: theme.palette.background.paper,
     },
     AppbarContentLeft: {
       display: 'flex',
+      flex: '1',
       gap: theme.spacing(3),
     },
     AppbarContentRight: {
@@ -44,12 +50,13 @@ const useStyles = makeStyles()((theme) => {
 export default function Appbar() {
   const theme = useTheme();
   const { classes } = useStyles();
+  const isSmallDevice = useMediaQuery(theme.breakpoints.down('md'));
 
   return (
     <Box className={classes.AppbarContainer}>
       <Box className={classes.AppbarContentLeft}>
-        <LogoIcon color={theme.palette.common.purple} />
-        <Input />
+        {!isSmallDevice && <LogoIcon color={theme.palette.common.purple} />}
+        <Input fullWidth={isSmallDevice} />
       </Box>
       <Box className={classes.AppbarContentRight}>
         <IconButton>
@@ -59,9 +66,11 @@ export default function Appbar() {
         </IconButton>
         <Box className={classes.AppbarContentRightUser}>
           <Avatar src={AvatarSrc} />
-          <Typography variant="subtitle1">
-            Герасімчук Марія Олександрівна
-          </Typography>
+          {!isSmallDevice && (
+            <Typography variant="subtitle1">
+              Герасімчук Марія Олександрівна
+            </Typography>
+          )}
           <IconButton>
             <ArrowDownIcon />
           </IconButton>

@@ -1,38 +1,44 @@
 import { Box, Typography } from '@mui/material';
-import Tabbar from '../components/Tabbar';
 import Appbar from '../components/Appbar';
 import { makeStyles } from 'tss-react/mui';
 import mock from '@/mock';
 import Teams from '../components/Teams';
 import Plans from '../components/Plans';
 import Updates from '../components/Updates/Updates';
+import Calendar from '../components/Calendar';
 
 const useStyles = makeStyles()((theme) => {
   return {
     dashboardContainer: {
+      width: '100%',
       display: 'grid',
-      gridTemplateColumns: 'auto 1fr',
-      height: '100%',
-    },
-    dashBoardWrapper: {
-      display: 'flex',
-      flexDirection: 'column',
-      height: '100%',
+      gridTemplateRows: 'auto 1fr',
+      overflow: 'auto',
+      [theme.breakpoints.down('md')]: {
+        position: 'relative',
+      },
     },
     dashboardContent: {
       display: 'flex',
       flexDirection: 'column',
-      height: '100%',
       gap: theme.spacing(3),
       padding: theme.spacing(1, 4),
+      [theme.breakpoints.down('md')]: {
+        padding: theme.spacing(1, 2),
+        gridRow: '2/3',
+      },
     },
     dashboardElementsCompose: {
       display: 'grid',
-      gridTemplateRows: 'minmax(1fr,100%) minmax(1fr,100%)',
+      gridTemplateRows: '1fr 1fr',
       gridTemplateColumns: '1fr 1fr',
       columnGap: theme.spacing(2.5),
       rowGap: theme.spacing(3),
       height: '100%',
+      [theme.breakpoints.down('lg')]: {
+        display: 'flex',
+        flexDirection: 'column',
+      },
     },
   };
 });
@@ -42,17 +48,14 @@ export default function Dashboard() {
 
   return (
     <Box className={classes.dashboardContainer}>
-      <Tabbar />
-      <Box className={classes.dashBoardWrapper}>
-        <Appbar />
-        <Box className={classes.dashboardContent}>
-          <Typography variant="h1">Контрольний центр</Typography>
-          <Box className={classes.dashboardElementsCompose}>
-            <Teams teams={mock.teams} />
-            <Teams teams={mock.teams} />
-            <Plans tasks={mock.tasks} />
-            <Updates messages={mock.messages} />
-          </Box>
+      <Appbar />
+      <Box className={classes.dashboardContent}>
+        <Typography variant="h1">Контрольний центр</Typography>
+        <Box className={classes.dashboardElementsCompose}>
+          <Teams teams={mock.teams} />
+          <Calendar />
+          <Plans tasks={mock.tasks} />
+          <Updates messages={mock.messages} />
         </Box>
       </Box>
     </Box>
