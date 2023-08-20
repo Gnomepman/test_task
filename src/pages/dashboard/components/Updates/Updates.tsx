@@ -1,12 +1,11 @@
 import Divider from '@/components/Divider';
-import ArrowDownIcon from '@/components/icons/ArrowDownIcon';
+import ExpandMoreButton from '@/components/ExpandMoreButton';
 import { Message } from '@/types';
 import { formatDate } from '@/utils';
 import {
   Avatar,
   Box,
   Collapse,
-  IconButton,
   Typography,
   useMediaQuery,
   useTheme,
@@ -73,9 +72,10 @@ export default function Updates(props: UpdatesProps) {
           Останні оновлення:
         </Typography>
         {isSmallDevice && (
-          <IconButton onClick={() => setExpanded((prev) => !prev)}>
-            <ArrowDownIcon />
-          </IconButton>
+          <ExpandMoreButton
+            onClick={() => setExpanded((prev) => !prev)}
+            expand={expanded}
+          />
         )}
       </Box>
       <Collapse in={!isSmallDevice || expanded}>

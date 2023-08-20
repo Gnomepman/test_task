@@ -1,8 +1,8 @@
 import Button from '@/components/Button';
 import { mapButtonVariants } from '@/components/Button/Button';
+import ExpandMoreButton from '@/components/ExpandMoreButton';
 import TableCell from '@/components/TableCell';
 import TableRow from '@/components/TableRow';
-import ArrowDownIcon from '@/components/icons/ArrowDownIcon';
 import DeleteIcon from '@/components/icons/DeleteIcon';
 import InfoIcon from '@/components/icons/InfoIcon';
 import { Task } from '@/types';
@@ -97,9 +97,10 @@ export default function Plans(props: PlansProps) {
             <strong>{tasks.length}</strong>
           </Typography>
           {isSmallDevice && (
-            <IconButton onClick={() => setExpanded((prev) => !prev)}>
-              <ArrowDownIcon />
-            </IconButton>
+            <ExpandMoreButton
+              onClick={() => setExpanded((prev) => !prev)}
+              expand={expanded}
+            />
           )}
         </Box>
       </Box>

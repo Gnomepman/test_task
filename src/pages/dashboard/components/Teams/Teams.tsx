@@ -1,7 +1,7 @@
 import Divider from '@/components/Divider';
+import ExpandMoreButton from '@/components/ExpandMoreButton';
 import TableCell from '@/components/TableCell';
 import TableRow from '@/components/TableRow';
-import ArrowDownIcon from '@/components/icons/ArrowDownIcon';
 import ColleaguesIcon from '@/components/icons/ColleaguesIcon';
 import DocumentIcon from '@/components/icons/DocumentIcon';
 import DotsIcon from '@/components/icons/DotsIcon';
@@ -93,9 +93,10 @@ export default function Teams(props: TeamsProps) {
             <strong>{teams.length}</strong>
           </Typography>
           {isSmallDevice && (
-            <IconButton onClick={() => setExpanded((prev) => !prev)}>
-              <ArrowDownIcon />
-            </IconButton>
+            <ExpandMoreButton
+              onClick={() => setExpanded((prev) => !prev)}
+              expand={expanded}
+            />
           )}
         </Box>
       </Box>

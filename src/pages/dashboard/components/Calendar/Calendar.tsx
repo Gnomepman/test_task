@@ -17,6 +17,7 @@ import ArrowLeftIcon from '@/components/icons/ArrowLeftIcon';
 import ArrowRightIcon from '@/components/icons/ArrowRightIcon';
 import Button from '@/components/Button';
 import { useState } from 'react';
+import ExpandMoreButton from '@/components/ExpandMoreButton';
 
 const useStyles = makeStyles()((theme) => {
   return {
@@ -91,9 +92,10 @@ export default function Calendar() {
           Календар
         </Typography>
         {isSmallDevice && (
-          <IconButton onClick={() => setExpanded((prev) => !prev)}>
-            <ArrowDownIcon />
-          </IconButton>
+          <ExpandMoreButton
+            onClick={() => setExpanded((prev) => !prev)}
+            expand={expanded}
+          />
         )}
       </Box>
       <Collapse in={!isSmallDevice || expanded} unmountOnExit>
